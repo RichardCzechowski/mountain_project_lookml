@@ -2,13 +2,15 @@ view: climbs {
   sql_table_name: mountain_proj.climbs ;;
 
   dimension: aid {
-    type: number
+    hidden: yes
+    type: yesno
     value_format_name: id
     sql: ${TABLE}.Aid ;;
   }
 
   dimension: alpine {
-    type: number
+    hidden: yes
+    type: yesno
     sql: ${TABLE}.Alpine ;;
   }
 
@@ -28,7 +30,8 @@ view: climbs {
   }
 
   dimension: boulder {
-    type: number
+    hidden: yes
+    type: yesno
     sql: ${TABLE}.Boulder ;;
   }
 
@@ -38,7 +41,7 @@ view: climbs {
   }
 
   dimension: chipped {
-    type: number
+    type: yesno
     sql: ${TABLE}.Chipped ;;
   }
 
@@ -48,22 +51,31 @@ view: climbs {
   }
 
   dimension: ice_snow {
-    type: number
+    type: yesno
     sql: ${TABLE}.Ice_Snow ;;
   }
 
   dimension: lat {
     type: string
     sql: ${TABLE}.Lat ;;
+    hidden: yes
   }
 
   dimension: lon {
     type: string
     sql: ${TABLE}.Lon ;;
+    hidden: yes
+  }
+
+  dimension: location {
+    type: location
+    sql_latitude: ${lat} ;;
+    sql_longitude: ${lon} ;;
   }
 
   dimension: mixed {
-    type: number
+    hidden: yes
+    type: yesno
     sql: ${TABLE}.Mixed ;;
   }
 
@@ -83,6 +95,7 @@ view: climbs {
   }
 
   dimension: route_id {
+    hidden: yes
     type: number
     sql: ${TABLE}.Route_ID ;;
   }
@@ -103,18 +116,60 @@ view: climbs {
   }
 
   dimension: sport {
-    type: number
+    hidden: yes
+    type: yesno
     sql: ${TABLE}.Sport ;;
   }
 
   dimension: top_rope {
-    type: number
+    hidden: yes
+    type: yesno
     sql: ${TABLE}.Top_Rope ;;
   }
 
   dimension: trad {
-    type: number
+    hidden: yes
+    type: yesno
     sql: ${TABLE}.Trad ;;
+  }
+
+  dimension: type {
+    case: {
+      when: {
+        sql: ${TABLE}.aid = 1 ;;
+        label: "Aid"
+      }
+      when: {
+        sql: ${TABLE}.alpine = 1 ;;
+        label: "Alpine"
+      }
+
+      when: {
+        sql: ${TABLE}.boulder = 1 ;;
+        label: "Boulder"
+      }
+      when: {
+        sql: ${TABLE}.ice_snow = 1 ;;
+        label: "Ice"
+      }
+
+      when: {
+        sql: ${TABLE}.mixed = 1 ;;
+        label: "Mixed"
+      }
+      when: {
+        sql: ${TABLE}.sport = 1 ;;
+        label: "Sport"
+      }
+      when: {
+        sql: ${TABLE}.toprope = 1 ;;
+        label: "Trad"
+      }
+      when: {
+        sql: ${TABLE}.trad = 1 ;;
+        label: "Trad"
+      }
+    }
   }
 
   measure: count {

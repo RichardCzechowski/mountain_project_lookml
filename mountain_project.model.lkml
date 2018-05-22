@@ -14,3 +14,11 @@ datagroup: mountain_project_default_datagroup {
 persist_with: mountain_project_default_datagroup
 
 explore: climbs {}
+
+explore: area_data {}
+
+explore: area_list {}
+
+explore: route_data {}
+
+explore: route_list {}
